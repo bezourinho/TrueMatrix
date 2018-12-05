@@ -23,32 +23,25 @@ class Matrix:
     def __setitem__(self, index, value):
         self.elems[index] = value
 
+    def _fn_base(self, other, op):
+        if other.__m == self.__m and other.__n == self.__n:
+            result = []
+
+            for i in range(other.__m):
+                lst = []
+
+                for j in range(other.__n):
+                    lst.append(op(self.elems[i][j], other.elems[i][j]))
+
+                result.append(lst)
+
+            return Matrix(result)
+
     def __add__(self, other):
-        if other.__m == self.__m and other.__n == self.__n:
-            result = []
-            
-            for i in range(other.__m):
-                lst = []
-                
-                for j in range(other.__n):
-                    lst.append(self.elems[i][j] + other.elems[i][j])
-                
-                result.append(lst)
-                
-            return Matrix(result)
-            
+        return self._fn_base(other, operator.add)
+
     def __sub__(self, other):
-        if other.__m == self.__m and other.__n == self.__n:
-            result = []
-            
-            for i in range(other.__m):
-                lst = []
-                
-                for j in range(other.__n):
-                    lst.append(self.elems[i][j] - other.elems[i][j])     
-                
-                result.append(lst)
-            return Matrix(result)
+        return self._fn_base(other, operator.sub)
             
     def __mul__(self, other):
         result = []
